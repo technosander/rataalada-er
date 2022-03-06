@@ -1,0 +1,15 @@
+{
+	"questions": [
+		{
+			"toSay": [["Wat", " is", " jouw", " naam?"]],
+			"correctAnswers": ["idk"]
+		},
+		{
+			"toSay": [["hello", " there"]],
+			"correctAnswers": ["General Kenobi"]
+		},
+		{
+			"toSay": [["Congratulations,", " you", " succeeded."]]
+		}
+	]
+}
