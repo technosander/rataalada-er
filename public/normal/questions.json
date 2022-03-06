@@ -1,7 +1,7 @@
 {
 	"questions": [
 		{
-			"toSay": [["Wat", " is", " jouw", " naam?"]],
+			"toSay": [["Wie", " ben", " ik?"]],
 			"correctAnswers": ["idk"]
 		},
 		{
