@@ -6,11 +6,16 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="./style.css">
 	<script src="/socket.io/socket.io.js"></script>
-	<script src="consoleScript.js" defer></script>
-	<script src="socketScript.js" defer></script>
-	<title>ER</title>
+	<script src="./script.js" defer></script>
+	<title>ER Admin</title>
 </head>
 <body>
-	<div id="textarea">Loading...</div>
+	<div id="textarea-container">
+		Send hints
+		<br/>
+		<textarea id="textarea"></textarea>
+		<br/>
+		<input type="button" id="send-hint-button" value="Send">
+	</div>
 </body>
 </html>

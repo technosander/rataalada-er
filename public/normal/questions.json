@@ -9,7 +9,12 @@
 			"correctAnswers": ["General Kenobi"]
 		},
 		{
-			"toSay": [["Congratulations,", " you", " succeeded."]]
+			"toSay": [["Congratulations,", " you", " succeeded."]],
+			"correctAnswers": true
+		},
+		{
+			"toSay": [["Really", " pushing", " it", " e?"]],
+			"correctAnswers": ["yes", "lol", "yes indeed"]
 		}
 	]
 }

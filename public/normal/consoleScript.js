@@ -12,6 +12,8 @@ fetch("./questions.json").then(res => res.json()).then(json => {
 
 let nextQuestionIndex = 0;
 let nextCorrectAnswers = [];
+let sayingSomething = false;
+let currentQuestionObj = questions?.[nextQuestionIndex];
 const textArea = document.getElementById("textarea");
 let typingAreaBegin = 0;
 let cursorNeeded = true;
@@ -29,7 +31,7 @@ document.onkeydown = e => {
 			add("&nbsp;");
 			break;
 		case "Enter":
-			if (nextCorrectAnswers) checkAnswer() ? nextQuestion() : say([["Answer", " incorrect."]], true, true);
+			if (nextCorrectAnswers) checkAnswer() ? nextQuestion() : answerIncorrect();
 			break;
 		case "Backspace":
 			if (typingAreaBegin < getLengthWithoutCursor()) remove(1);
@@ -45,14 +47,16 @@ function begin() {
 	nextQuestion();
 }
 function nextQuestion() {
-	const question = questions[nextQuestionIndex];
-	if (!question) return;
+	currentQuestionObj = questions[nextQuestionIndex];
+	if (!currentQuestionObj) return;
 	if (nextQuestionIndex > 0) add("<br/>");
-	say(question.toSay, question.correctAnswers ? true : false, nextQuestionIndex == 0 ? false : true);
-	nextCorrectAnswers = question.correctAnswers ? question.correctAnswers : null;
+	say(currentQuestionObj.toSay, currentQuestionObj.correctAnswers ? true : false, nextQuestionIndex == 0 ? false : true);
+	nextCorrectAnswers = currentQuestionObj.correctAnswers ? currentQuestionObj.correctAnswers : null;
 	nextQuestionIndex++;
+	if (!nextCorrectAnswers) nextQuestion();
 }
 function checkAnswer() {
+	if (nextCorrectAnswers === true) return true;
 	let answer = textArea.innerHTML.substring(typingAreaBegin, getLengthWithoutCursor());
 	answer = answer.replace(/&nbsp;/g, " ");
 	if (nextCorrectAnswers.some(correctAnswer => {
@@ -60,6 +64,9 @@ function checkAnswer() {
 		return correctAnswer.trim().split("").filter(char => isLetter(char) || !isNaN(char)).join("").toLowerCase() == answer.trim().split("").filter(char => isLetter(char) || !isNaN(char)).join("").toLowerCase();
 	})) return true;
 	return false;
+}
+function answerIncorrect() {
+	say([["Answer", " incorrect."], ...currentQuestionObj.toSay], nextCorrectAnswers ? true : false, true);
 }
 
 function getLengthWithoutCursor() {
@@ -111,10 +118,14 @@ function disableCursor() {
 
 /**
  * Don't use twice in direct succession, use multiple arr params
- * @param {string[]} strArrArr Arrays of strings with words to say
+ * @param {string[][]} strArrArr Arrays of strings with words to say
  * @param {boolean} enableTypingAfterwards
  */
 function say(strArrArr, enableTypingAfterwards = true, beginEnter = true) {
+	if (sayingSomething) return setTimeout(say, wordDelay, strArrArr, enableTypingAfterwards, beginEnter);
+
+	sayingSomething = true;
+	if (enableTypingAfterwards === null) enableTypingAfterwards = typingAllowed;
 	typingAllowed = false;
 	if (beginEnter) add("<br/>");
 	let strArr = strArrArr[0];
@@ -139,6 +150,7 @@ function say(strArrArr, enableTypingAfterwards = true, beginEnter = true) {
 					else disableCursor();
 					add("&nbsp;&nbsp;&nbsp;");
 					typingAreaBegin = getLengthWithoutCursor();
+					sayingSomething = false;
 				}
 			}, wordDelay * (j + 1));
 		});
