@@ -11,3 +11,11 @@ body {
 	user-select: none;
 	color: #29e808;
 }
+
+hr {
+	border: 1px solid #29e808;
+}
+
+input {
+	font-family: 'Source Code Pro';
+}

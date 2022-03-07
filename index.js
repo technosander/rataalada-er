@@ -24,6 +24,12 @@ io.on("connection", (socket) => {
 	socket.on("hint", toSay => {
 		socket.to("normal").emit("hint", toSay);
 	});
+	socket.on("toCheck", (answer, wasCorrect, questionNum) => {
+		socket.to("admin").emit("toCheck", answer, wasCorrect, questionNum, socket.id);
+	});
+	socket.on("approve", (socketId) => {
+		socket.to(socketId).emit("approve");
+	});
 });
 
 const port = process.env.PORT || 8130;

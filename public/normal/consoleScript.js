@@ -1,6 +1,6 @@
 const cursor = "&nbsp;&lt;?&gt;";
 const cursorDelay = 500; // in ms
-const wordDelay = 600;
+const wordDelay = 300;
 const prefix = "&gt;&gt;&nbsp;";
 const specialRemoves = ["<br/>&nbsp;&nbsp;&nbsp;", "<br>&nbsp;&nbsp;&nbsp;", "<br>", "<br/>", "&nbsp;", "&gt;", "&lt;", ];
 const otherAllowedChars = ["'", ".", ",", "?", "!"];
@@ -13,6 +13,7 @@ fetch("./questions.json").then(res => res.json()).then(json => {
 let nextQuestionIndex = 0;
 let nextCorrectAnswers = [];
 let sayingSomething = false;
+let toSayQueue = [];
 let currentQuestionObj = questions?.[nextQuestionIndex];
 const textArea = document.getElementById("textarea");
 let typingAreaBegin = 0;
@@ -32,6 +33,7 @@ document.onkeydown = e => {
 			break;
 		case "Enter":
 			if (nextCorrectAnswers) checkAnswer() ? nextQuestion() : answerIncorrect();
+			checkByAdmin(textArea.innerHTML.substring(typingAreaBegin, getLengthWithoutCursor()));
 			break;
 		case "Backspace":
 			if (typingAreaBegin < getLengthWithoutCursor()) remove(1);
@@ -111,6 +113,10 @@ function toggleCursor() {
 	else textArea.innerHTML = textArea.innerHTML.substring(0, textArea.innerHTML.length - cursor.length);
 	cursorEnabled = !cursorEnabled;
 }
+function enableCursor() {
+	if (!cursorEnabled) toggleCursor();
+	cursorNeeded = true;
+}
 function disableCursor() {
 	if (cursorEnabled) toggleCursor();
 	cursorNeeded = false;
@@ -121,12 +127,13 @@ function disableCursor() {
  * @param {string[][]} strArrArr Arrays of strings with words to say
  * @param {boolean} enableTypingAfterwards
  */
-function say(strArrArr, enableTypingAfterwards = true, beginEnter = true) {
-	if (sayingSomething) return setTimeout(say, wordDelay, strArrArr, enableTypingAfterwards, beginEnter);
+function say(strArrArr, enableTypingAfterwards = true, beginEnter = true, endEnter = true) {
+	if (sayingSomething) return toSayQueue.push({ strArrArr, enableTypingAfterwards, beginEnter });
 
 	sayingSomething = true;
 	if (enableTypingAfterwards === null) enableTypingAfterwards = typingAllowed;
 	typingAllowed = false;
+	enableCursor();
 	if (beginEnter) add("<br/>");
 	let strArr = strArrArr[0];
 	sayNext(0);
@@ -142,15 +149,20 @@ function say(strArrArr, enableTypingAfterwards = true, beginEnter = true) {
 			}, wordDelay * (j + 1));
 			else if (j != strArr.length - 1) setTimeout(add, wordDelay * (j + 1), str);
 			else setTimeout(() => {
-				add((j == 0 ? prefix : "") + str + "<br/>")
+				add((j == 0 ? prefix : "") + str + (endEnter ? "<br/>" : ""));
 				strArr = strArrArr[index + 1];
 				if (strArr) sayNext(index + 1);
 				else {
 					if (enableTypingAfterwards) typingAllowed = true;
 					else disableCursor();
-					add("&nbsp;&nbsp;&nbsp;");
+					if (endEnter) add("&nbsp;&nbsp;&nbsp;");
 					typingAreaBegin = getLengthWithoutCursor();
 					sayingSomething = false;
+
+					if (toSayQueue.length > 0) {
+						let nextInQueue = toSayQueue.shift();
+						say(nextInQueue.strArrArr, nextInQueue.enableTypingAfterwards, nextInQueue.beginEnter);
+					}
 				}
 			}, wordDelay * (j + 1));
 		});
