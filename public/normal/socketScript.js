@@ -6,7 +6,7 @@ socket.on("hint", toSay => {
 	say(toSay, null, true);
 });
 
-function checkByAdmin(answer) {
+function checkByAdmin(answer, wasCorrect) {
 	socket.emit("toCheck", answer, wasCorrect, nextQuestionIndex);
 }
 

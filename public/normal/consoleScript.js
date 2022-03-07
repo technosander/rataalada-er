@@ -32,8 +32,8 @@ document.onkeydown = e => {
 			add("&nbsp;");
 			break;
 		case "Enter":
+			if (nextCorrectAnswers) checkByAdmin(textArea.innerHTML.substring(typingAreaBegin, getLengthWithoutCursor()), checkAnswer());
 			if (nextCorrectAnswers) checkAnswer() ? nextQuestion() : answerIncorrect();
-			checkByAdmin(textArea.innerHTML.substring(typingAreaBegin, getLengthWithoutCursor()));
 			break;
 		case "Backspace":
 			if (typingAreaBegin < getLengthWithoutCursor()) remove(1);
