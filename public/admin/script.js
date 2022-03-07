@@ -9,5 +9,5 @@ const sendButton = document.getElementById("send-hint-button");
 sendButton.onclick = e => {
 	text = textArea.value;
 	textArea.value = "";
-	socket.emit("hint", [["hint: ", ...text.split(" ")]]);
+	socket.emit("hint", [["hint: ", ...text.split(" ").map(str => str = " " + str)]]);
 };

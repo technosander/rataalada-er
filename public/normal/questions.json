@@ -15,6 +15,9 @@
 		{
 			"toSay": [["Really", " pushing", " it", " e?"]],
 			"correctAnswers": ["yes", "lol", "yes indeed"]
+		},
+		{
+			"toSay": [["Alrighty", " then,", " fuck", " you."]]
 		}
 	]
 }

@@ -136,13 +136,13 @@ function say(strArrArr, enableTypingAfterwards = true, beginEnter = true) {
 			str = str.toUpperCase();
 			str = str.replace(/<BR>|<BR\/>/g, "<br/>   ");
 			str = str.replace(/ /g, "&nbsp;"); // must be here to make typingAreaBegin work
-			if (j == 0) setTimeout(() => {
+			if (j == 0 && j != strArr.length - 1) setTimeout(() => {
 				add(prefix);
 				add(str);
 			}, wordDelay * (j + 1));
 			else if (j != strArr.length - 1) setTimeout(add, wordDelay * (j + 1), str);
 			else setTimeout(() => {
-				add(str + "<br/>")
+				add((j == 0 ? prefix : null) + str + "<br/>")
 				strArr = strArrArr[index + 1];
 				if (strArr) sayNext(index + 1);
 				else {
