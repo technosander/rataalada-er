@@ -142,7 +142,7 @@ function say(strArrArr, enableTypingAfterwards = true, beginEnter = true) {
 			}, wordDelay * (j + 1));
 			else if (j != strArr.length - 1) setTimeout(add, wordDelay * (j + 1), str);
 			else setTimeout(() => {
-				add((j == 0 ? prefix : null) + str + "<br/>")
+				add((j == 0 ? prefix : "") + str + "<br/>")
 				strArr = strArrArr[index + 1];
 				if (strArr) sayNext(index + 1);
 				else {
