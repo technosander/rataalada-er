@@ -13,4 +13,8 @@ function checkByAdmin(answer, wasCorrect) {
 socket.on("approve", () => {
 	say([["Answer", " approved", " by", " higher", " authority.", " Next", " question."]], false, true, false);
 	nextQuestion();
-})
+});
+
+function updateQuestionNum() {
+	socket.emit("updateQuestionNum", nextQuestionIndex);
+}

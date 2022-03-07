@@ -26,7 +26,6 @@ let cursorInterval = setInterval(toggleCursor, cursorDelay);
 document.onkeydown = e => {
 	if (!typingAllowed) return;
 	const key = e.key;
-	// console.log(key);
 	switch (key) {
 		case " ":
 			add("&nbsp;");
@@ -55,6 +54,7 @@ function nextQuestion() {
 	say(currentQuestionObj.toSay, currentQuestionObj.correctAnswers ? true : false, nextQuestionIndex == 0 ? false : true);
 	nextCorrectAnswers = currentQuestionObj.correctAnswers ? currentQuestionObj.correctAnswers : null;
 	nextQuestionIndex++;
+	updateQuestionNum();
 	if (!nextCorrectAnswers) nextQuestion();
 }
 function checkAnswer() {
@@ -62,7 +62,6 @@ function checkAnswer() {
 	let answer = textArea.innerHTML.substring(typingAreaBegin, getLengthWithoutCursor());
 	answer = answer.replace(/&nbsp;/g, " ");
 	if (nextCorrectAnswers.some(correctAnswer => {
-		// console.log(correctAnswer.trim().split("").filter(char => isLetter(char) || !isNaN(char)).join("").toLowerCase() + "==" + answer.trim().split("").filter(char => isLetter(char) || !isNaN(char)).join("").toLowerCase());
 		return correctAnswer.trim().split("").filter(char => isLetter(char) || !isNaN(char)).join("").toLowerCase() == answer.trim().split("").filter(char => isLetter(char) || !isNaN(char)).join("").toLowerCase();
 	})) return true;
 	return false;

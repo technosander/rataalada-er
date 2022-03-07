@@ -10,6 +10,7 @@ body {
 	overflow: hidden;
 	user-select: none;
 	color: #29e808;
+	padding: 5px 0 0 5px;
 }
 
 hr {

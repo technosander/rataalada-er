@@ -21,10 +21,28 @@ let servingSocketId = "";
 socket.on("toCheck", (answer, wasCorrect, questionNum, socketId) => {
 	approvedSpan.hidden = true;
 	toApproveDiv.innerHTML = `nr. ${questionNum}<br/><br/>antwoord${wasCorrect ? " (was al juist)" : ""}: ${answer}`;
-	servingSocketId = socketId;
+	checkServingSocketId(socketId);
 });
 
 approveButton.onclick = e => {
+	if (!servingSocketId) return;
 	approvedSpan.hidden = false;
 	socket.emit("approve", servingSocketId);
+}
+
+
+const numSpan = document.getElementById("question-num");
+
+socket.on("updateQuestionNum", (num, socketId) => {
+	numSpan.innerHTML = num;
+	checkServingSocketId(socketId);
+});
+
+
+const socketIdSpan = document.getElementById("serving-socket");
+function checkServingSocketId(id) {
+	if (!servingSocketId) {
+		servingSocketId = id;
+		socketIdSpan.innerHTML = id;
+	}
 }
