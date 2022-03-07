@@ -18,7 +18,10 @@ io.on("connection", (socket) => {
 	let isAdmin = false;
 	socket.on("identification", (obj) => {
 		isAdmin = obj.isAdmin;
-		if (!isAdmin) socket.join("normal");
+		if (!isAdmin) {
+			socket.join("normal");
+			io.to(socket.id).emit("getId", socket.id);
+		}
 		else socket.join("admin");
 	});
 	socket.on("hint", toSay => {

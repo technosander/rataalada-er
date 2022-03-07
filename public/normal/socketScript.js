@@ -1,6 +1,7 @@
 const socket = io();
 
 socket.emit("identification", { isAdmin: false });
+socket.on("getId", id => console.log(id));
 
 socket.on("hint", toSay => {
 	say(toSay, null, true);
