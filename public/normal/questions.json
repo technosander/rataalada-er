@@ -5,17 +5,17 @@
 			"endEnter": false
 		},
 		{
-			"toSay": [["Wat", " is", " de", " eerste", " code?"]],
+			"toSay": [["Wat", " is", " de", " eerste", " code?", " ⚀"]],
 			"correctAnswers": ["184"],
 			"endEnter": true
 		},
 		{
-			"toSay": [["Wat", " is", " de", " tweede", " code?"]],
+			"toSay": [["Wat", " is", " de", " tweede", " code?", " ⚁"]],
 			"correctAnswers": ["72"],
 			"endEnter": true
 		},
 		{
-			"toSay": [["Wat", " is", " de", " 3de"," en", " 4de", " code?"]],
+			"toSay": [["Wat", " is", " de", " laatste", " code?", " ⚂⚃"]],
 			"correctAnswers": ["89"],
 			"endEnter": true
 		},
