@@ -1,23 +1,24 @@
 {
 	"questions": [
 		{
-			"toSay": [["Wie", " ben", " ik?"]],
-			"correctAnswers": ["idk"]
-		},
-		{
-			"toSay": [["hello", " there"]],
-			"correctAnswers": ["General Kenobi"]
-		},
-		{
-			"toSay": [["Congratulations,", " you", " succeeded."]],
+			"toSay": [["Wat", " is", " de", " code?"]],
 			"correctAnswers": true
 		},
 		{
-			"toSay": [["Really", " pushing", " it", " e?"]],
-			"correctAnswers": ["yes", "lol", "yes indeed"]
+			"toSay": [["De", " corruptie", " vloeit", " hier", " over", " de", " kop.", "\nPolitie,", " rechters,", " politiekers,", "...", " allemaal", " mensen", " met", " een", " hoge", " job."], 
+			["Iedereen", " behalve", " ik", " verduistert,", " het", " antwoord", " bevindt", " zich", " tussen", " licht", " en", " donker."]],
+			"correctAnswers": ["schaduw"]
 		},
 		{
-			"toSay": [["Alrighty", " then,", " fuck", " you."]]
+			"toSay": [["Hoe", " noem", " je", " een", " raadselachtige", " kerst?"]],
+			"correctAnswers": ["quizmass", "quizmas", "kwismass", "kwismas"]
+		},
+		{
+			"toSay": [["Wat", " vliegt", " zonder", " vleugels?"]],
+			"correctAnswers": ["tijd", "time", "de tijd"]
+		},
+		{
+			"toSay": [["Well done!"]]
 		}
 	]
 }
