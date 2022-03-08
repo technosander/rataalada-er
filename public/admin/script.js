@@ -7,9 +7,10 @@ const textArea = document.getElementById("textarea");
 const sendButton = document.getElementById("send-hint-button");
 
 sendButton.onclick = e => {
+	if (!servingSocketId) return;
 	text = textArea.value;
 	textArea.value = "";
-	socket.emit("hint", [["hint:", ...text.split(" ").map(str => str = " " + str)]]);
+	if (text.trim().length > 0) socket.emit("hint", [["hint:", ...text.split(" ").map(str => str = " " + str)]], servingSocketId);
 };
 
 
@@ -19,6 +20,7 @@ const approvedSpan = document.getElementById("approved-span");
 let servingSocketId = "";
 
 socket.on("toCheck", (answer, wasCorrect, questionNum, socketId) => {
+	if (servingSocketId && socketId != servingSocketId) return;
 	approvedSpan.hidden = true;
 	toApproveDiv.innerHTML = `nr. ${questionNum}<br/><br/>antwoord${wasCorrect ? " (was al juist)" : ""}: ${answer}`;
 	checkServingSocketId(socketId);
@@ -34,6 +36,7 @@ approveButton.onclick = e => {
 const numSpan = document.getElementById("question-num");
 
 socket.on("updateQuestionNum", (num, socketId) => {
+	if (servingSocketId && socketId != servingSocketId) return;
 	numSpan.innerHTML = num;
 	checkServingSocketId(socketId);
 });

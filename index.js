@@ -24,11 +24,12 @@ io.on("connection", (socket) => {
 		}
 		else socket.join("admin");
 	});
-	socket.on("hint", toSay => {
-		socket.to("normal").emit("hint", toSay);
+	socket.on("hint", (toSay, to) => {
+		socket.to(to).emit("hint", toSay);
 	});
 	socket.on("toCheck", (answer, wasCorrect, questionNum) => {
 		socket.to("admin").emit("toCheck", answer, wasCorrect, questionNum, socket.id);
+		socket.to("admin").emit("updateQuestionNum", questionNum, socket.id)
 	});
 	socket.on("approve", (socketId) => {
 		socket.to(socketId).emit("approve");

@@ -1,24 +1,61 @@
 {
 	"questions": [
 		{
-			"toSay": [["Wat", " is", " de", " code?"]],
-			"correctAnswers": true
+			"toSay": [["Welkom."]],
+			"endEnter": false
 		},
 		{
-			"toSay": [["De", " corruptie", " vloeit", " hier", " over", " de", " kop.", "\nPolitie,", " rechters,", " politiekers,", "...", " allemaal", " mensen", " met", " een", " hoge", " job."], 
-			["Iedereen", " behalve", " ik", " verduistert,", " het", " antwoord", " bevindt", " zich", " tussen", " licht", " en", " donker."]],
-			"correctAnswers": ["schaduw"]
+			"toSay": [["Wat", " is", " de", " eerste", " code?"]],
+			"correctAnswers": ["184"],
+			"endEnter": true
 		},
 		{
-			"toSay": [["Hoe", " noem", " je", " een", " raadselachtige", " kerst?"]],
-			"correctAnswers": ["quizmass", "quizmas", "kwismass", "kwismas"]
+			"toSay": [["Wat", " is", " de", " tweede", " code?"]],
+			"correctAnswers": ["72"],
+			"endEnter": true
 		},
 		{
-			"toSay": [["Wat", " vliegt", " zonder", " vleugels?"]],
-			"correctAnswers": ["tijd", "time", "de tijd"]
+			"toSay": [["Wat", " is", " de", " 3de"," en", " 4de", " code?"]],
+			"correctAnswers": ["89"],
+			"endEnter": true
+		},
+		
+		{
+			"toSay": [["De", " corruptie", " vloeit", " hier", " over", " de", " kop.", "<br/>Politie,", " rechters,", " politiekers,", "...", " allemaal", " mensen", " met", " een", " hoge", " job.", 
+				"<br/>'s Nachts", " hoor", " je", " het", " corrupte", " gefluister."]],
+			"extraEnterInFront": true,
+			"endEnter": false
 		},
 		{
-			"toSay": [["Well done!"]]
-		}
+			"toSay": [["Het", " antwoord", " bevindt", " zich", " tussen", " licht", " en", " duister."]],
+			"correctAnswers": ["schaduw"],
+			"endEnter": true
+		},
+		{
+			"toSay": [["Juist...", " maar", " de", " volgende", " vind", " je", " nooit!"]],
+			"endEnter": true
+		},
+
+		{
+            "toSay": [["Hoe", " noem", " je", " een", " raadselachtige", " kerst?"]],
+            "correctAnswers": ["quizmass", "quizmas", "kwismass", "kwismas"],
+			"extraEnterInFront": false,
+			"endEnter": true
+        },
+		{
+			"toSay": [["Weeral correct...", " gelukkig", " weet", " je", " de", " volgende", " niet,", " haha"]],
+			"endEnter": true
+		},
+
+		{
+            "toSay": [["Wat", " vliegt", " zonder", " vleugels?"]],
+            "correctAnswers": ["tijd", "time", "de tijd"],
+			"extraEnterInFront": false,
+			"endEnter": true
+        },
+		{
+            "toSay": [["Ik", " heb", " je", " onderschat."], ["Ik", " moet", " zeggen:", " goed", " gedaan."]],
+			"endEnter": true
+        }
 	]
 }

@@ -24,6 +24,7 @@ let typingAllowed = false;
 let cursorInterval = setInterval(toggleCursor, cursorDelay);
 
 document.onkeydown = e => {
+	scrollToBottom();
 	if (!typingAllowed) return;
 	const key = e.key;
 	switch (key) {
@@ -31,8 +32,10 @@ document.onkeydown = e => {
 			add("&nbsp;");
 			break;
 		case "Enter":
-			if (nextCorrectAnswers) checkByAdmin(textArea.innerHTML.substring(typingAreaBegin, getLengthWithoutCursor()), checkAnswer());
-			if (nextCorrectAnswers) checkAnswer() ? nextQuestion() : answerIncorrect();
+			if (nextCorrectAnswers) {
+				checkByAdmin(textArea.innerHTML.substring(typingAreaBegin, getLengthWithoutCursor()), checkAnswer());
+				checkAnswer() ? nextQuestion(true) : answerIncorrect();
+			}
 			break;
 		case "Backspace":
 			if (typingAreaBegin < getLengthWithoutCursor()) remove(1);
@@ -47,15 +50,14 @@ function begin() {
 	textArea.innerHTML = "";
 	nextQuestion();
 }
-function nextQuestion() {
+function nextQuestion(afterAnswer = false) {
 	currentQuestionObj = questions[nextQuestionIndex];
 	if (!currentQuestionObj) return;
-	if (nextQuestionIndex > 0) add("<br/>");
-	say(currentQuestionObj.toSay, currentQuestionObj.correctAnswers ? true : false, nextQuestionIndex == 0 ? false : true);
+	if (currentQuestionObj.extraEnterInFront) add("<br/>");
 	nextCorrectAnswers = currentQuestionObj.correctAnswers ? currentQuestionObj.correctAnswers : null;
 	nextQuestionIndex++;
+	say(currentQuestionObj.toSay, currentQuestionObj.correctAnswers ? true : false, nextQuestionIndex == 0 ? false : true, currentQuestionObj.endEnter, () => !nextCorrectAnswers ? nextQuestion() : null);
 	updateQuestionNum();
-	if (!nextCorrectAnswers) nextQuestion();
 }
 function checkAnswer() {
 	if (nextCorrectAnswers === true) return true;
@@ -125,9 +127,12 @@ function disableCursor() {
  * Don't use twice in direct succession, use multiple arr params
  * @param {string[][]} strArrArr Arrays of strings with words to say
  * @param {boolean} enableTypingAfterwards
+ * @param {boolean} beginEnter
+ * @param {boolean} endEnter
+ * @param {Function} callback
  */
-function say(strArrArr, enableTypingAfterwards = true, beginEnter = true, endEnter = true) {
-	if (sayingSomething) return toSayQueue.push({ strArrArr, enableTypingAfterwards, beginEnter });
+function say(strArrArr, enableTypingAfterwards = true, beginEnter = true, endEnter = true, callback) {
+	if (sayingSomething) return toSayQueue.push({ strArrArr, enableTypingAfterwards, beginEnter, endEnter, callback });
 
 	sayingSomething = true;
 	if (enableTypingAfterwards === null) enableTypingAfterwards = typingAllowed;
@@ -145,9 +150,11 @@ function say(strArrArr, enableTypingAfterwards = true, beginEnter = true, endEnt
 			if (j == 0 && j != strArr.length - 1) setTimeout(() => {
 				add(prefix);
 				add(str);
+				scrollToBottom();
 			}, wordDelay * (j + 1));
-			else if (j != strArr.length - 1) setTimeout(add, wordDelay * (j + 1), str);
+			else if (j != strArr.length - 1) setTimeout(() => { add(str); scrollToBottom(); }, wordDelay * (j + 1));
 			else setTimeout(() => {
+				scrollToBottom();
 				add((j == 0 ? prefix : "") + str + (endEnter ? "<br/>" : ""));
 				strArr = strArrArr[index + 1];
 				if (strArr) sayNext(index + 1);
@@ -158,12 +165,19 @@ function say(strArrArr, enableTypingAfterwards = true, beginEnter = true, endEnt
 					typingAreaBegin = getLengthWithoutCursor();
 					sayingSomething = false;
 
+				 	scrollToBottom();
+					if (callback) callback();
+
 					if (toSayQueue.length > 0) {
 						let nextInQueue = toSayQueue.shift();
-						say(nextInQueue.strArrArr, nextInQueue.enableTypingAfterwards, nextInQueue.beginEnter);
+						say(nextInQueue.strArrArr, nextInQueue.enableTypingAfterwards, nextInQueue.beginEnter, nextInQueue.endEnter, nextInQueue.callback);
 					}
 				}
 			}, wordDelay * (j + 1));
 		});
 	}
+}
+
+function scrollToBottom() {
+	textArea.scrollTop = textArea.scrollHeight - textArea.clientHeight;
 }
