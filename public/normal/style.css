@@ -22,4 +22,38 @@ body {
 	color: #29e808;
 	overflow-x: hidden;
 	overflow-y: scroll;
+	font-size: 18px;
+	z-index: 0;
+}
+
+#start {
+	background-color: black;
+	border: 0.1vh #29e808 solid;
+	position: absolute;
+	height: 10vh;
+	width: 50vw;
+	margin: 0;
+	padding: 0;
+	color: #29e808;
+	top: 40vh;
+	left: 25vw;
+	font-size: 4vh;
+	z-index: 2;
+}
+
+#timer {
+	background-color: black;
+	border-top: 0.1vh #29e808 solid;
+	border-left: 0.1vh #29e808 solid;
+	position: absolute;
+	height: 75px;
+	width: 200px;
+	margin: 0;
+	padding: 0;
+	color: #29e808;
+	right: 0px;
+	bottom: 0px;
+	z-index: 1;
+	text-align: center;
+	font-size: 60px;
 }

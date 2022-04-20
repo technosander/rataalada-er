@@ -1,3 +1,4 @@
+const totalTime = 600; // in s
 const cursor = "&nbsp;&lt;?&gt;";
 const cursorDelay = 500; // in ms
 const wordDelay = 300;
@@ -7,8 +8,16 @@ const otherAllowedChars = ["'", ".", ",", "?", "!"];
 let questions;
 fetch("./questions.json").then(res => res.json()).then(json => {
 	questions = json.questions;
-	begin();
+	showStart();
 });
+
+const startButton = document.getElementById("start");
+const timer = document.getElementById("timer");
+let timerStarted = false;
+const formatOptions = { minimumIntegerDigits: 2, useGrouping: false };
+timer.innerHTML = `${Math.floor(totalTime / 60).toLocaleString('en-US', formatOptions)}:${(totalTime % 60).toLocaleString('en-US', formatOptions)}`;
+let timeRemaining = totalTime;
+sendTime(totalTime);
 
 let nextQuestionIndex = 0;
 let nextCorrectAnswers = [];
@@ -17,9 +26,11 @@ let toSayQueue = [];
 let currentQuestionObj = questions?.[nextQuestionIndex];
 const textArea = document.getElementById("textarea");
 let typingAreaBegin = 0;
-let cursorNeeded = true;
+let cursorNeeded = false;
 let cursorEnabled = false;
 let typingAllowed = false;
+
+let wordDelayMultiplier = 1;
 
 let cursorInterval = setInterval(toggleCursor, cursorDelay);
 
@@ -46,13 +57,42 @@ document.onkeydown = e => {
 	}
 }
 
-function begin() {
+startButton.onclick = begin;
+
+function showStart() {
 	textArea.innerHTML = "";
+	startButton.hidden = false;
+}
+
+function startTimer() {
+	timerStarted = true;
+	timerInterval = setInterval(() => {
+		timeRemaining -= 1;
+		timer.innerHTML = `${Math.floor(timeRemaining / 60).toLocaleString('en-US', formatOptions)}:${(timeRemaining % 60).toLocaleString('en-US', formatOptions)}`;
+		sendTime(timeRemaining);
+		if (timeRemaining <= 0) {
+			clearInterval(timerInterval);
+			say([["Gefaald!", " Precies", " zoals", " ik", " verwacht", " had."], ["Nu...", "", "", " BOEM!!!"]], false, true, true);
+		}
+	}, 1000);
+}
+function stopTimer() {
+	clearInterval(timerInterval);
+}
+
+function begin() {
+	startButton.hidden = true;
+	textArea.innerHTML = "";
+	cursorNeeded = true;
 	nextQuestion();
+	startTimer();
 }
 function nextQuestion(afterAnswer = false) {
 	currentQuestionObj = questions[nextQuestionIndex];
-	if (!currentQuestionObj) return;
+	if (!currentQuestionObj) {
+		stopTimer();
+		return;
+	}
 	if (currentQuestionObj.extraEnterInFront) add("<br/>");
 	nextCorrectAnswers = currentQuestionObj.correctAnswers ? currentQuestionObj.correctAnswers : null;
 	nextQuestionIndex++;
@@ -169,6 +209,7 @@ function say(strArrArr, enableTypingAfterwards = true, beginEnter = true, endEnt
 					if (callback) callback();
 
 					if (toSayQueue.length > 0) {
+						wordDelayMultiplier = 1;
 						let nextInQueue = toSayQueue.shift();
 						say(nextInQueue.strArrArr, nextInQueue.enableTypingAfterwards, nextInQueue.beginEnter, nextInQueue.endEnter, nextInQueue.callback);
 					}

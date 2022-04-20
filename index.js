@@ -35,6 +35,8 @@ io.on("connection", (socket) => {
 		socket.to(socketId).emit("approve");
 	});
 	socket.on("updateQuestionNum", num => socket.to("admin").emit("updateQuestionNum", num, socket.id));
+	socket.on("time", (time) => socket.to("admin").emit("time", time, socket.id));
+	socket.on("connectToAdmin", () => socket.to("admin").emit("connectToAdmin", socket.id));
 });
 
 const port = process.env.PORT || 8130;

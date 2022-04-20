@@ -20,10 +20,10 @@ const approvedSpan = document.getElementById("approved-span");
 let servingSocketId = "";
 
 socket.on("toCheck", (answer, wasCorrect, questionNum, socketId) => {
-	if (servingSocketId && socketId != servingSocketId) return;
+	setServingSocketId(socketId);
+	if (socketId != servingSocketId) return;
 	approvedSpan.hidden = true;
 	toApproveDiv.innerHTML = `nr. ${questionNum}<br/><br/>antwoord${wasCorrect ? " (was al juist)" : ""}: ${answer}`;
-	checkServingSocketId(socketId);
 });
 
 approveButton.onclick = e => {
@@ -36,16 +36,29 @@ approveButton.onclick = e => {
 const numSpan = document.getElementById("question-num");
 
 socket.on("updateQuestionNum", (num, socketId) => {
-	if (servingSocketId && socketId != servingSocketId) return;
+	setServingSocketId(socketId);
+	if (socketId != servingSocketId) return;
 	numSpan.innerHTML = num;
-	checkServingSocketId(socketId);
 });
 
+const formatOptions = { minimumIntegerDigits: 2, useGrouping: false };
+
+const timer = document.getElementById("timer");
+socket.on("time", (time, socketId) => {
+	setServingSocketId(socketId);
+	if (socketId != servingSocketId) return;
+	timer.innerHTML = `${Math.floor(time / 60).toLocaleString('en-US', formatOptions)}:${(time % 60).toLocaleString('en-US', formatOptions)}`;
+	if (time <= 0) approveButton.hidden = true;
+});
 
 const socketIdSpan = document.getElementById("serving-socket");
-function checkServingSocketId(id) {
+function setServingSocketId(id) {
 	if (!servingSocketId) {
 		servingSocketId = id;
 		socketIdSpan.innerHTML = id;
 	}
 }
+
+socket.on("connectToAdmin", (id) => {
+	setServingSocketId(id);
+})
