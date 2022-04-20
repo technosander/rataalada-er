@@ -22,7 +22,7 @@
 
 		{
 			"toSay": [["Correct...", " maar", " je", " bent", " nog", " niet", " aan", " me", " ontsnapt!"], 
-			["Wil", " je", " dat", " de", " stad", " niet", " ontploft,", " los", " dan", " dit", " raadsel", " op", " voordat", " de", " val", " toeklapt."]],
+			["Wil", " je", " dat", " de", " stad", " niet", " ontploft,", " los", " dan", " dit", " raadsel", " op."]],
 			"extraEnterInFront": true,
 			"endEnter": true
 		},
@@ -39,8 +39,13 @@
 			"endEnter": true
 		},
 		{
-            "toSay": [["Ik", " heb", " je", " onderschat."], ["Ik", " moet", " zeggen:", " goed", " gedaan."], ["Vaarwel."]],
+            "toSay": [["Ik", " heb", " je", " onderschat."], ["Ik", " moet", " zeggen:", " goed", " gedaan."]],
+			"extraEnterInFront": true,
 			"endEnter": true
-        }
+        },
+		{
+			"toSay": [["Vaarwel."]],
+			"endEnter": false
+		}
 	]
 }
