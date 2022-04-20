@@ -1,4 +1,4 @@
-const totalTime = 600; // in s
+const totalTime = 2; // in s
 const cursor = "&nbsp;&lt;?&gt;";
 const cursorDelay = 500; // in ms
 const wordDelay = 300;
@@ -64,6 +64,8 @@ function showStart() {
 	startButton.hidden = false;
 }
 
+const explosionsAudio = new Audio("./explosion.wav");
+
 function startTimer() {
 	timerStarted = true;
 	timerInterval = setInterval(() => {
@@ -73,6 +75,7 @@ function startTimer() {
 		if (timeRemaining <= 0) {
 			clearInterval(timerInterval);
 			say([["Gefaald!", " Precies", " zoals", " ik", " verwacht", " had."], ["Nu...", "", "", " BOEM!!!"]], false, true, true);
+			explosionsAudio.play();
 		}
 	}, 1000);
 }
