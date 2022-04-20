@@ -19,11 +19,18 @@
 			"correctAnswers": ["89"],
 			"endEnter": true
 		},
+
+		{
+			"toSay": [["Correct...", " maar", " je", " bent", " nog", " niet", " aan", " me", " ontsnapt!"], 
+			["Wil", " je", " dat", " de", " stad", " niet", " ontploft,", " los", " dan", " dit", " raadsel", " op", " voordat", " de", " val", " toeklapt."]],
+			"extraEnterInFront": true,
+			"endEnter": true
+		},
 		
 		{
 			"toSay": [["De", " corruptie", " vloeit", " hier", " over", " de", " kop.", "<br/>Politie,", " rechters,", " politiekers,", "...", " allemaal", " mensen", " met", " een", " hoge", " job.", 
 				"<br/>'s Nachts", " hoor", " je", " het", " corrupte", " gefluister."]],
-			"extraEnterInFront": true,
+			"extraEnterInFront": false,
 			"endEnter": false
 		},
 		{
@@ -32,29 +39,7 @@
 			"endEnter": true
 		},
 		{
-			"toSay": [["Juist...", " maar", " de", " volgende", " vind", " je", " nooit!"]],
-			"endEnter": true
-		},
-
-		{
-            "toSay": [["Hoe", " noem", " je", " een", " raadselachtige", " kerst?"]],
-            "correctAnswers": ["quizmass", "quizmas", "kwismass", "kwismas"],
-			"extraEnterInFront": false,
-			"endEnter": true
-        },
-		{
-			"toSay": [["Weeral correct...", " gelukkig", " weet", " je", " de", " volgende", " niet,", " haha"]],
-			"endEnter": true
-		},
-
-		{
-            "toSay": [["Wat", " vliegt", " zonder", " vleugels?"]],
-            "correctAnswers": ["tijd", "time", "de tijd"],
-			"extraEnterInFront": false,
-			"endEnter": true
-        },
-		{
-            "toSay": [["Ik", " heb", " je", " onderschat."], ["Ik", " moet", " zeggen:", " goed", " gedaan."]],
+            "toSay": [["Ik", " heb", " je", " onderschat."], ["Ik", " moet", " zeggen:", " goed", " gedaan."], ["Vaarwel."]],
 			"endEnter": true
         }
 	]
