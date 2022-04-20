@@ -1,4 +1,4 @@
-const totalTime = 2; // in s
+const totalTime = 600; // in s
 const cursor = "&nbsp;&lt;?&gt;";
 const cursorDelay = 500; // in ms
 const wordDelay = 300;
