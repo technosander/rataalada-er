@@ -20,7 +20,7 @@ function checkByAdmin(answer, wasCorrect) {
 
 socket.on("approve", () => {
 	if (timerStarted) {
-		say([["Answer", " approved", " by", " higher", " authority.", " Next", " question."]], null, true, false, nextQuestion);
+		say([["Antwoord", " van", " buitenaf", " toch", " goedgekeurd.", " Volgende."]], null, true, false, nextQuestion);
 		hintAudio.play();
 	}
 });
@@ -35,4 +35,8 @@ function sendTime(time) {
 
 function testSocket() {
 	socket.emit("toCheck", "TEST", false, nextQuestionIndex);
+}
+
+function escaped() {
+	socket.emit("escaped");
 }

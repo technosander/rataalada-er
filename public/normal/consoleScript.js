@@ -88,14 +88,16 @@ function begin() {
 	textArea.innerHTML = "";
 	cursorNeeded = true;
 	nextQuestion();
-	startTimer();
 }
 function nextQuestion(afterAnswer = false) {
 	currentQuestionObj = questions[nextQuestionIndex];
 	if (!currentQuestionObj) {
-		stopTimer();
+		escaped();
 		return;
 	}
+
+	if (currentQuestionObj.startTimer) startTimer();
+	if (currentQuestionObj.stopTimer) stopTimer();
 	if (currentQuestionObj.extraEnterInFront) add("<br/>");
 	nextCorrectAnswers = currentQuestionObj.correctAnswers ? currentQuestionObj.correctAnswers : null;
 	nextQuestionIndex++;
@@ -112,7 +114,7 @@ function checkAnswer() {
 	return false;
 }
 function answerIncorrect() {
-	say([["Answer", " incorrect."], ...currentQuestionObj.toSay], nextCorrectAnswers ? true : false, true);
+	say([["Fout", " antwoord,", " de", " tijd", " tikt..."], ...currentQuestionObj.toSay], nextCorrectAnswers ? true : false, true);
 }
 
 function getLengthWithoutCursor() {

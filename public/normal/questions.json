@@ -1,13 +1,14 @@
 {
 	"questions": [
 		{
-			"toSay": [["Welkom."]],
-			"endEnter": false
+			"toSay": [["Welkom", "<br/>en", " alvast", " vaarwel", " naar", " deze", " hopeloze", " stad", ", inclusief", " jij", ", batman."]],
+			"endEnter": true
 		},
 		{
 			"toSay": [["Wat", " is", " de", " eerste", " code?", " ⚀"]],
 			"correctAnswers": ["184"],
-			"endEnter": true
+			"endEnter": true,
+			"startTimer": true
 		},
 		{
 			"toSay": [["Wat", " is", " de", " tweede", " code?", " ⚁"]],
@@ -31,17 +32,20 @@
 			"toSay": [["De", " corruptie", " vloeit", " hier", " over", " de", " kop.", "<br/>Politie,", " rechters,", " politiekers,", "...", " allemaal", " mensen", " met", " een", " hoge", " job.", 
 				"<br/>'s Nachts", " hoor", " je", " het", " corrupte", " gefluister."]],
 			"extraEnterInFront": false,
-			"endEnter": false
+			"endEnter": false,
+			"stopTimer": true
 		},
 		{
 			"toSay": [["Het", " antwoord", " bevindt", " zich", " tussen", " licht", " en", " duister."]],
 			"correctAnswers": ["schaduw"],
-			"endEnter": true
+			"endEnter": true,
+			"startTimer": true
 		},
 		{
-            "toSay": [["Ik", " heb", " je", " onderschat."], ["Ik", " moet", " zeggen:", " goed", " gedaan."]],
+            "toSay": [["Ik", " heb", " je", " onderschat."], ["Ik", " moet", " zeggen:", " goed", " gedaan.", "<br/>de", " stad", " gaat", " dan", " toch", " niet", " aan", " mijn", " handen", " ten", " onder."]],
 			"extraEnterInFront": true,
-			"endEnter": true
+			"endEnter": true,
+			"stopTimer": true
         },
 		{
 			"toSay": [["Vaarwel."]],

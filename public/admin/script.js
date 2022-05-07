@@ -61,4 +61,10 @@ function setServingSocketId(id) {
 
 socket.on("connectToAdmin", (id) => {
 	setServingSocketId(id);
+});
+
+socket.on("escaped", (socketId) => {
+	setServingSocketId(id);
+	if (socketId != servingSocketId) return;
+	document.getElementById("escaped").innerHTML = "Ontsnapt!";
 })
