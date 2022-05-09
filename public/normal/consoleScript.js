@@ -11,6 +11,10 @@ fetch("./questions.json").then(res => res.json()).then(json => {
 	showStart();
 });
 
+const video = document.getElementById("video");
+video.width = window.innerWidth;
+video.height = window.innerHeight;
+
 const startButton = document.getElementById("start");
 const timer = document.getElementById("timer");
 let timerStarted = false;
@@ -64,7 +68,7 @@ function showStart() {
 	startButton.hidden = false;
 }
 
-const explosionsAudio = new Audio("./explosion.wav");
+// const explosionsAudio = new Audio("./explosion.wav");
 
 function startTimer() {
 	timerStarted = true;
@@ -75,12 +79,21 @@ function startTimer() {
 		if (timeRemaining <= 0) {
 			clearInterval(timerInterval);
 			say([["Gefaald!", " Precies", " zoals", " ik", " verwacht", " had."], ["Nu...", "", "", " BOEM!!!"]], false, true, true);
-			explosionsAudio.play();
+			// explosionsAudio.play();
+			video.hidden = false;
+			video.play();
+			video.onended = e => video.hidden = true;
 		}
 	}, 1000);
 }
 function stopTimer() {
 	clearInterval(timerInterval);
+}
+
+function testEndTimer() {
+	timeRemaining = 1;
+	timer.innerHTML = `${Math.floor(timeRemaining / 60).toLocaleString('en-US', formatOptions)}:${(timeRemaining % 60).toLocaleString('en-US', formatOptions)}`;
+	sendTime(timeRemaining);
 }
 
 function begin() {
